@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { InMemoryRepository, ConcurrencyError } from "../src/repositories/InMemoryRepository";
+import { InMemoryRepository } from "../src/repositories/InMemoryRepository";
+import { ConcurrencyError } from "../src/repositories/IRepository";
 import { TaskService } from "../src/services/TaskService";
 import { Task } from "../src/domain/Task";
 import { IdempotencyStore } from "../src/http/idempotency";
@@ -24,7 +25,6 @@ describe("Layered Architecture API", () => {
 
     expect(task.title).toBe("Test Task");
     
-    // Complete the task
     const updated = await service.completeTask("123", task.updated_at);
     expect(updated?.status).toBe("done");
   });
@@ -37,10 +37,8 @@ describe("Layered Architecture API", () => {
       workspace_id: "ws-1"
     });
 
-    // Simulate another request modifying it first (timestamp changes)
     await repo.update("123", { title: "Changed" });
 
-    // Trying to complete with old timestamp should throw ConcurrencyError (409)
     await expect(service.completeTask("123", task.updated_at)).rejects.toThrow(ConcurrencyError);
   });
 
