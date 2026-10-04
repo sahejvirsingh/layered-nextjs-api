@@ -1,0 +1,21 @@
+{
+  "name": "layered-nextjs-api",
+  "version": "0.1.0",
+  "description": "Reference Next.js API using clean architecture, idempotency, and optimistic concurrency.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.0",
+    "vitest": "^1.4.0"
+  },
+  "license": "MIT"
+}
