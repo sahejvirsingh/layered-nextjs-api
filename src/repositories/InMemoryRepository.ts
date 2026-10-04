@@ -23,6 +23,9 @@ export class InMemoryRepository<T extends { id: string; workspace_id: string; up
       throw new ConcurrencyError();
     }
 
+    // Ensure timestamp differs even in fast tests
+    await new Promise(r => setTimeout(r, 2));
+
     const updated = { ...existing, ...data, updated_at: new Date().toISOString() };
     this.data.set(id, updated as T);
   }

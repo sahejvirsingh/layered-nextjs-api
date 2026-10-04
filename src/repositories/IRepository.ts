@@ -10,5 +10,6 @@ export class ConcurrencyError extends Error {
   constructor() {
     super("Concurrency conflict: The resource has been updated by another request.");
     this.name = "ConcurrencyError";
+    Object.setPrototypeOf(this, ConcurrencyError.prototype);
   }
 }
